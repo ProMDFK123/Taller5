@@ -117,17 +117,25 @@ package Objects{
 
 package System{
     Class LecturaArchivos{
-        -libros: ListaNodoDoble
-        -usuarios: ListaElemento
-
         -LecturaArchivos()
         +leerArchivoLibros(): void
         +leerArchivoUsuarios(): void
     }
 
     interface Sistema <<Interface>>{}
+
     Class SistemaImpl{}
-    Class Utils{}
+
+    Class Utils{
+        -Utils()
+        +validarRut(rut: String): boolean
+        +digitoVerificador(rut:String): String
+        +validarString(string: String): boolean
+        +validarInt(i: int): boolean
+        +validarRango(i: int, min: int, max: int): boolean
+        +validarContrasenia(clave: String): boolean
+        +validarElemento(elemento: Elemento): boolean
+    }
 }
 
 Elemento ^.. Libro: <<implementa>>
@@ -145,8 +153,8 @@ NodoDoble"0..1" o--> "0..1"NodoDoble: siguiente
 ListaNodoDoble *--> "0..1"NodoDoble: cabeza
 ListaNodoDoble *--> "0..1"NodoDoble: cola
 SistemaImpl -- ListaNodoDoble: contiene >
-LecturaArchivos -- ListaNodoDoble: contiene >
-SistemaImpl -- ListaElemento: contiene >
+LecturaArchivos --> ListaNodoDoble: <<usa>>
+SistemaImpl --> ListaElemento: <<usa>>
 LecturaArchivos -- ListaElemento: contiene >
 SistemaImpl ..^ Sistema: <<implementa>>
 Utils ..> SistemaImpl: <<usa>>
