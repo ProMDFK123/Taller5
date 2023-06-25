@@ -5,11 +5,28 @@ skin rose
 package List{
     package Array{
         interface Contenedor <<Interface>>{
+            +agregar(elemento: Elemento): boolean
+            +eliminar(elemento: Elemento): boolean
+            +contiene(elemento: Elemento): boolean
+            +isVacia(): boolean
         }
 
-        interface ListaStatic <<Interface>>{}
+        interface ListaStatic <<Interface>>{
+            +agregar(elemento: Elemento, int posicion): boolean
+            +eliminar(int posicion): boolean
+            +getPosicion(elemento: Elemento): int
+            +getElemento(int posicion): Elemento
+        }
 
-        Class ListaElemento{}
+        Class ListaElemento{
+            -cantElementos: int
+            -maximo: int
+            -elementos: Elemento[]
+
+            +ListaElemento(maximo: int)
+            +getCantElementos(): int
+            +getMaximo(): int
+        }
     }
 
     package Linked{
@@ -133,4 +150,5 @@ SistemaImpl ..^ Sistema: <<implementa>>
 Utils ..> SistemaImpl: <<usa>>
 Utils ..> Libro: <<usa>>
 Utils ..> Usuario: <<usa>>
+Utils ..> ListaElemento: <<usa>>
 @enduml

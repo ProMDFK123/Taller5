@@ -80,4 +80,17 @@ public class Utils {
      * @return true si es un elemento, false si es nulo.
      */
     public static boolean validarElemento(Elemento elemento){return elemento!=null;}
+
+    /**
+     * Método que valida si un número se encuentra dentro de un determinado rango.
+     * @param i - número a validar.
+     * @param min - valor mínimo del rango.
+     * @param max - valor máximo del rango.
+     * @return true si el número esta dentro del rango.
+     */
+    public static boolean validarRango(int i, int min, int max){
+        if(min<i && i<max) return true;
+
+        return false;
+    }
 }
