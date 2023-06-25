@@ -89,7 +89,7 @@ public class Utils {
      * @return true si el número esta dentro del rango.
      */
     public static boolean validarRango(int i, int min, int max){
-        if(min<i && i<max) return true;
+        if(min<=i && i<=max) return true;
 
         return false;
     }

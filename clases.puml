@@ -65,6 +65,8 @@ package List{
 
             +ListaNodoDoble()
             +getTamanio(): int
+            +isCabeza(elemento: Elemento): boolean
+            +isCola(elemento: Elemento): boolean
         }
     }
 
@@ -151,4 +153,5 @@ Utils ..> SistemaImpl: <<usa>>
 Utils ..> Libro: <<usa>>
 Utils ..> Usuario: <<usa>>
 Utils ..> ListaElemento: <<usa>>
+Utils ..> ListaNodoDoble: <<usa>>
 @enduml

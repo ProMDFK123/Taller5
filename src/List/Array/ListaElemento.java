@@ -43,6 +43,9 @@ public class ListaElemento implements ListaStatic{
      */
     @Override
     public boolean agregar(Elemento elemento) {
+        //Valida el elemento.
+        if(!Utils.validarElemento(elemento)) throw new IllegalArgumentException("[!] Elemento Invalido [!]");
+
         //Si el elemento ya existe.
         if(this.contiene(elemento)) return false;
 
@@ -62,6 +65,9 @@ public class ListaElemento implements ListaStatic{
      */
     @Override
     public boolean eliminar(Elemento elemento) {
+        //Valida el elemento.
+        if(!Utils.validarElemento(elemento)) throw new IllegalArgumentException("[!] Elemento Invalido [!]");
+
         //Si la lista esta vacía.
         if(this.isVacia()) return false;
 
@@ -87,6 +93,9 @@ public class ListaElemento implements ListaStatic{
      */
     @Override
     public boolean contiene(Elemento elemento) {
+        //Validación del elemento.
+        if(!Utils.validarElemento(elemento)) throw new IllegalArgumentException("[!] Elemento Invalido [!]");
+
         //La lista esta vacía.
         if(this.isVacia()) return false;
 
@@ -115,6 +124,9 @@ public class ListaElemento implements ListaStatic{
      */
     @Override
     public boolean agregar(Elemento elemento, int posicion) {
+        //Validación de elemento.
+        if(!Utils.validarElemento(elemento)) throw new IllegalArgumentException("[!] Elemento Invalido [!]");
+
         //Si la posición se encuentra fuera del rango.
         if(!Utils.validarRango(posicion,0,this.maximo)) return false;
 
@@ -159,6 +171,9 @@ public class ListaElemento implements ListaStatic{
      */
     @Override
     public int getPosicion(Elemento elemento) {
+        //Validación de elemento.
+        if(!Utils.validarElemento(elemento)) throw new IllegalArgumentException("[!] Elemento Invalido [!]");
+
         //Lista vacía.
         if(this.isVacia()) return -1;
 
