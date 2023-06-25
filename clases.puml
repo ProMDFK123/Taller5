@@ -1,0 +1,136 @@
+@startuml
+left to right direction
+skin rose
+
+package List{
+    package Array{
+        interface Contenedor <<Interface>>{
+        }
+
+        interface ListaStatic <<Interface>>{}
+
+        Class ListaElemento{}
+    }
+
+    package Linked{
+        interface Coleccion <<Interface>>{
+            +agregar(elemento: Elemento): boolean
+            +eliminar(elemento: Elemento): boolean
+            +contiene(elemento: Elemento): boolean
+            +vaciar(): void
+            +isVacia(): boolean
+        }
+
+        interface Lista <<Interface>>{
+            +agregar(elemento: Elemento, int posicion): boolean
+            +eliminar(int posicion): boolean
+            +getPosicion(elemento: Elemento): int
+            +getElemento(int posicion): Elemento
+        }
+
+        Class NodoDoble{
+            -siguiente: NodoDoble
+            -anterior: NodoDoble
+            -elemento: Elemento
+
+            +NodoDoble(elemento: Elemento)
+            +getElemento(): Elemento
+            +getSiguiente(): NodoDoble
+            +getAnterior(): NodoDoble
+            +setSiguiente(siguiente: NodoDoble): void
+            +setAnterior(anterior: NodoDoble): void
+        }
+
+        Class ListaNodoDoble{
+            -cabeza: NodoDoble
+            -cola: NodoDoble
+            -tamanio: int
+
+            +ListaNodoDoble()
+            +getTamanio(): int
+        }
+    }
+
+    interface Elemento <<Interface>>{
+        +esIgual(elemento: Elemento): boolean
+        +compararCon(elemento: Elemento): int
+    }
+}
+
+package Objects{
+    Class Libro{
+        -isbn: int
+        -titulo: String
+        -autor: String
+        -categoria: String
+        -stock: int
+
+        +Libro(isbn: int, titulo: String, autor: String, categoria: String, stock: int)
+        +getIsbn(): int
+        +getTitulo(): String
+        +getAutor(): String
+        +getCategoria(): String
+        +getStock(): int
+        +setIsbn(isbn: int): void
+        +setTitulo(titulo: String): void
+        +setAutor(autor: String): void
+        +setCategoria(categoria: String): void
+        +setStock(stock: int): void
+    }
+
+    Class Usuario{
+        -rut: String
+        -nombre: String
+        -apellido: String
+        -contrasenia: String
+
+        +Usuario(rut: String, nombre: String, apellido: String, contrasenia: String)
+        +getRut(): String
+        +getNombre(): String
+        +getApellido(): String
+        +getContrasenia(): String
+        +setRut(rut: String): void
+        +setNombre(nombre: String): void
+        +setApellido(apellido: String): void
+        +setContrasenia(contrasenia: String): void
+    }
+}
+
+package System{
+    Class LecturaArchivos{
+        -libros: ListaNodoDoble
+        -usuarios: ListaElemento
+
+        -LecturaArchivos()
+        +leerArchivoLibros(): void
+        +leerArchivoUsuarios(): void
+    }
+
+    interface Sistema <<Interface>>{}
+    Class SistemaImpl{}
+    Class Utils{}
+}
+
+Elemento ^.. Libro: <<implementa>>
+Elemento ^.. Usuario: <<implementa>>
+Coleccion ..> Elemento: <<usa>>
+Contenedor ..> Elemento: <<usa>>
+Lista --^ Coleccion: <<extiende>>
+ListaStatic --^ Contenedor: <<extiende>>
+ListaStatic *-- Elemento: contiene >
+ListaElemento ..^ ListaStatic: <<implementa>>
+ListaNodoDoble ..^ Lista: <<implementa>>
+NodoDoble *-- Elemento: contiene >
+NodoDoble"0..1" o--> "0..1"NodoDoble: anterior
+NodoDoble"0..1" o--> "0..1"NodoDoble: siguiente
+ListaNodoDoble *--> "0..1"NodoDoble: cabeza
+ListaNodoDoble *--> "0..1"NodoDoble: cola
+SistemaImpl -- ListaNodoDoble: contiene >
+LecturaArchivos -- ListaNodoDoble: contiene >
+SistemaImpl -- ListaElemento: contiene >
+LecturaArchivos -- ListaElemento: contiene >
+SistemaImpl ..^ Sistema: <<implementa>>
+Utils ..> SistemaImpl: <<usa>>
+Utils ..> Libro: <<usa>>
+Utils ..> Usuario: <<usa>>
+@enduml
