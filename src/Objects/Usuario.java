@@ -1,11 +1,12 @@
 package Objects;
 
+import List.Elemento;
 import System.Utils;
 
 /**
  * Clase para un usuario.
  */
-public class Usuario {
+public class Usuario implements Elemento {
     //RUT del usuario.
     private String rut;
     //Nombre del usuario.
@@ -118,5 +119,39 @@ public class Usuario {
             if (!Utils.validarContrasenia(contrasenia)) throw new IllegalArgumentException("[!] Contraseña Invalido [!]");
             this.contrasenia = contrasenia;
         }
+    }
+
+    /**
+     * Método que verifica si 2 usuarios son o no son iguales.
+     * @param elemento a comparar.
+     * @return true si son iguales, false en caso contrario.
+     */
+    @Override
+    public boolean esIgual(Elemento elemento) {
+        //Si el elemento es el mismo.
+        if(this==elemento) return true;
+
+        //Si el elemento es instancia de usuario.
+        if(elemento instanceof Usuario usuario) return this.rut== usuario.rut;
+
+        //Si el elemento ingresado es una instancia de otra cosa.
+        return false;
+    }
+
+    /**
+     * Método que compara 2 usuarios.
+     * @param elemento con el cual comparar.
+     * @return 0 si son iguales, -1 si es menor o 1 si es mayor.
+     */
+    @Override
+    public int compararCon(Elemento elemento) {
+        //Comparación consigo mismo.
+        if(this==elemento) return 0;
+
+        //Comparación por nombre.
+        if(elemento instanceof Usuario usuario) return this.nombre.compareTo(usuario.nombre);
+
+        //No se pueden comparar.
+        throw new IllegalArgumentException("[!] El elemento no es un usuario [!]");
     }
 }

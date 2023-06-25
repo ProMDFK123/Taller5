@@ -1,5 +1,8 @@
 package System;
 
+import List.Array.ListaElemento;
+import List.Linked.ListaNodoDoble;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -7,11 +10,10 @@ import java.io.FileReader;
  * @author Gabriel López.
  */
 public class LecturaArchivos {
+    private ListaElemento usuarios;
+    private ListaNodoDoble libros;
 
-    /*
-        Para la correcta lectura de los archivos, estos deben estan en la carpeta del proyecto, fuera
-        de la carpeta "src".
-     */
+    private LecturaArchivos() {}
 
     /**
      * Método encargado de leer el archivo de "libros.txt".

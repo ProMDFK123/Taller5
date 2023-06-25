@@ -1,14 +1,15 @@
 package Objects;
 
+import List.Elemento;
 import System.Utils;
 
 /**
  * Clase de un libro.
  */
-public class Libro {
+public class Libro implements Elemento {
     //El código ISBN del libro.
     private int isbn;
-    //El titulo del libro.
+    //El título del libro.
     private String titulo;
     //El autor del libro.
     private String autor;
@@ -16,8 +17,9 @@ public class Libro {
     private String categoria;
     //La cantidad de unidades disponibles.
     private int stock;
+    private int precio;
 
-    public Libro(int isbn, String titulo, String autor, String categoria, int stock) {
+    public Libro(int isbn, String titulo, String autor, String categoria, int stock, int precio) {
         //Validación del ISBN.
         if(!Utils.validarInt(isbn)) throw new IllegalArgumentException("[!] ISBN Invalido [!]");
         this.isbn = isbn;
@@ -37,6 +39,9 @@ public class Libro {
         //Validación del stock.
         if(!Utils.validarInt(stock)) throw new IllegalArgumentException("[!] Stock Invalido [!]");
         this.stock = stock;
+
+        if(!Utils.validarInt(precio)) throw new IllegalArgumentException("[!] Precio Invalido [!]");
+        this.precio=precio;
     }
 
     //Los Getter.
@@ -61,6 +66,10 @@ public class Libro {
         return stock;
     }
 
+    public int getPrecio() {
+        return precio;
+    }
+
     //Los Setter.
 
     public void setIsbn(int isbn) {
@@ -81,5 +90,43 @@ public class Libro {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    /**
+     * Método que verifica si 2 libros son o no son iguales.
+     * @param elemento a comparar.
+     * @return true si son iguales, false en caso contrario.
+     */
+    @Override
+    public boolean esIgual(Elemento elemento) {
+        //Si el elemento es el mismo.
+        if(this==elemento) return true;
+
+        //Si el elemento es instancia de libro.
+        if(elemento instanceof Libro libro) return this.isbn== libro.isbn;
+
+        //Si el elemento ingresado es una instancia de otra cosa.
+        return false;
+    }
+
+    /**
+     * Método que compara 2 libros.
+     * @param elemento con el cual comparar.
+     * @return 0 si son iguales, -1 si es menor o 1 si es mayor.
+     */
+    @Override
+    public int compararCon(Elemento elemento) {
+        //Comparación consigo mismo.
+        if(this==elemento) return 0;
+
+        //Comparación por nombre.
+        if(elemento instanceof Libro libro) return this.titulo.compareTo(libro.titulo);
+
+        //No se pueden comparar.
+        throw new IllegalArgumentException("[!] El elemento no es un libro [!]");
     }
 }

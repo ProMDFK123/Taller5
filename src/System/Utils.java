@@ -1,5 +1,7 @@
 package System;
 
+import List.Elemento;
+
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,4 +73,11 @@ public class Utils {
      * @return true si es mayor a 0, false en caso contrario.
      */
     public static boolean validarInt(int i){return i<0;}
+
+    /**
+     * Método que valida un elemento.
+     * @param elemento a validar.
+     * @return true si es un elemento, false si es nulo.
+     */
+    public static boolean validarElemento(Elemento elemento){return elemento!=null;}
 }
