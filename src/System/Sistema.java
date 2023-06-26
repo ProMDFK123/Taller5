@@ -4,10 +4,33 @@ package System;
  * Interfaz del sistema con los contratos del mismo.
  */
 public interface Sistema {
-    void iniciarSesion();
-    void buscarLibro();
-    void prestarLibro();
-    void agregarLibro();
-    void devolverLibro();
-    boolean cerrarPrograma(boolean estado);
+    /**
+     * Método de inicio de sesión.
+     */
+    void iniciarSesion(Ventana ventana);
+
+    /**
+     * Método para buscar un libro.
+     */
+    void buscarLibro(Ventana ventana);
+
+    /**
+     * Método para prestar un libro.
+     */
+    void prestarLibro(Ventana ventana);
+
+    /**
+     * Método para agregar un libro.
+     */
+    void agregarLibro(Ventana ventana);
+
+    /**
+     * Método para devolver un libro
+     */
+    void devolverLibro(Ventana ventana);
+
+    /**
+     * Método para cerrar el programa.
+     */
+    void cerrarPrograma();
 }

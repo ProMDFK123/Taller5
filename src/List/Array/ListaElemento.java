@@ -19,7 +19,6 @@ public class ListaElemento implements ListaStatic{
      * @param maximo - capacidad máxima de la lista.
      */
     public ListaElemento(int maximo) {
-        if(!Utils.validarInt(maximo)) throw new IllegalArgumentException("[!] Valor Invalido [!]");
         this.maximo = maximo;
         this.cantElementos=0;
         elementos=new Elemento[maximo];
