@@ -121,9 +121,9 @@ public class SistemaImpl implements Sistema{
         panel.add(texto2);
         texto2.setText("Contraseña");
 
-        boton.setBounds(50,110,80,25);
+        boton.setBounds(50,110,160,25);
         panel.add(boton);
-        boton.setText("logIn");
+        boton.setText("Iniciar Sesión");
     }
 
     @Override
@@ -135,7 +135,22 @@ public class SistemaImpl implements Sistema{
         ventana.setBounds(50,20,280,180);
         ventana.setVisible(true);
 
+        panel=new JPanel();
+        panel.setBackground(Color.pink);
+        ventana.setContentPane(panel);
+        panel.setLayout(null);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        texto=new JTextField();
+        boton=new JButton();
+
+        texto.setBounds(50,10,160,25);
+        panel.add(texto);
+        texto.setText("ISBN");
+
+        boton.setBounds(50,40,160,25);
+        panel.add(boton);
+        boton.setText("Buscar");
     }
 
     @Override
