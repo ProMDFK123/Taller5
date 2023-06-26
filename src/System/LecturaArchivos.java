@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 /**
- * @author Gabriel López.
+ * @author Marcelo Cespedes.
  */
 public class LecturaArchivos {
     private LecturaArchivos() {}
@@ -55,13 +55,6 @@ public class LecturaArchivos {
                 String name = chain[1];
                 String lastname = chain[2];
                 String password = chain[3];
-
-                //TODO: Eliminar los print, solo están de prueba para saber si el archivo se leyó correctamente.
-                System.out.println("RUT: " + rut);
-                System.out.println("Nombre: " + name);
-                System.out.println("Apellido: " + lastname);
-                System.out.println("Contraseña: " + password);
-                System.out.println("-----------------------------");
 
                 Usuario usuario = new Usuario(rut,name,lastname,password);
                 lista.agregar(usuario);

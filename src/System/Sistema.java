@@ -32,5 +32,5 @@ public interface Sistema {
     /**
      * Método para cerrar el programa.
      */
-    void cerrarPrograma();
+    void cerrarPrograma(Ventana ventana);
 }

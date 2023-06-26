@@ -126,6 +126,10 @@ public class SistemaImpl implements Sistema{
         boton.setText("Iniciar Sesión");
     }
 
+    /**
+     * Método de busqueda de un libro.
+     * @param ventana a utilizar.
+     */
     @Override
     public void buscarLibro(Ventana ventana) {
         JTextField texto;
@@ -153,22 +157,59 @@ public class SistemaImpl implements Sistema{
         boton.setText("Buscar");
     }
 
+    /**
+     * Método para prestar un libro.
+     * @param ventana a utilizar.
+     */
     @Override
     public void prestarLibro(Ventana ventana) {
+        JTextField texto;
+        JButton boton;
+        JPanel panel;
 
+        ventana.setBounds(50,20,280,180);
+        ventana.setVisible(true);
+
+        panel=new JPanel();
+        panel.setBackground(Color.pink);
+        ventana.setContentPane(panel);
+        panel.setLayout(null);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        texto=new JTextField();
+        boton=new JButton();
+
+        texto.setBounds(50,10,160,25);
+        boton.setBounds(50,40,160,25);
+        panel.add(texto);
+        panel.add(boton);
+        texto.setText("ISBN");
+        boton.setText("Realizar Prestamo");
     }
 
+    /**
+     * Método para añadir un nuevo libro al stock.´
+     * @param ventana a utilizar.
+     */
     @Override
     public void agregarLibro(Ventana ventana) {
 
     }
 
+    /**
+     * Método de devolución de un libro.
+     * @param ventana a usar.
+     */
     @Override
     public void devolverLibro(Ventana ventana) {
 
     }
 
+    /**
+     * Método para cerrar la sesión.
+     */
     @Override
-    public void cerrarPrograma() {
+    public void cerrarPrograma(Ventana ventana) {
+        iniciarSesion(ventana);
     }
 }
