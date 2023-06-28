@@ -1,5 +1,6 @@
 package List.Array;
 
+import Objects.Usuario;
 import System.Utils;
 import List.Elemento;
 
@@ -200,5 +201,22 @@ public class ListaElemento implements ListaStatic{
         if(this.isVacia()) return null;
 
         return this.elementos[posicion];
+    }
+
+    /**
+     * Método para buscar a un usuario en la lista.
+     * @param rut del usuario buscado.
+     * @return el usuario buscado.
+     */
+    public Elemento buscar(String rut){
+        for(Elemento elemento:elementos){
+            if(elemento instanceof Usuario usuario){
+                String auxRUT = usuario.getRut();
+
+                if(auxRUT.equals(rut)) return usuario;
+            }
+        }
+
+        return null;
     }
 }
