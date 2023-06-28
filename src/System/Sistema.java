@@ -17,25 +17,24 @@ public interface Sistema {
     /**
      * Método para buscar un libro.
      */
-    void buscarLibro(Ventana ventana, Usuario usuario);
+    void buscarLibro(Ventana ventana);
 
     /**
      * Método para prestar un libro.
      */
-    void prestarLibro(Ventana ventana, Usuario usuario);
+    void prestarLibro(Ventana ventana);
 
     /**
      * Método para agregar un libro.
      */
-    void agregarLibro(Ventana ventana, Usuario usuario);
+    void agregarLibro(Ventana ventana);
 
     /**
      * Método para devolver un libro
      */
-    void devolverLibro(Ventana ventana, Usuario usuario);
-
+    void devolverLibro(Ventana ventana);
     /**
      * Método para cerrar el programa.
      */
-    Usuario cerrarPrograma(Ventana ventana, Usuario usuario, ArrayList lista) throws IOException;
+    void cerrarPrograma(Ventana ventana, ArrayList lista) throws IOException;
 }

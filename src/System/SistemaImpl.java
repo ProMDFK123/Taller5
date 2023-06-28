@@ -46,7 +46,8 @@ public class SistemaImpl implements Sistema{
         LecturaArchivos.leerArchivoLibros(libros);
         LecturaArchivos.leerArchivoUsuarios(usuarios);
 
-        iniciarSesion(window);
+        mainMenu(window);
+        //iniciarSesion(window);
     }
 
     /**
@@ -60,8 +61,7 @@ public class SistemaImpl implements Sistema{
      * Menú principal con las opciones del programa.
      * @param ventana a usar.
      */
-    public void mainMenu(Ventana ventana, Usuario usuario){
-        while(usuario!=null) {
+    public void mainMenu(Ventana ventana){
             //Definición de botones y panel.
             JButton boton1, boton2, boton3, boton4, boton5;
             JPanel panel;
@@ -105,25 +105,25 @@ public class SistemaImpl implements Sistema{
             boton1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton1) buscarLibro(window,usuario);
+                    if (e.getSource() == boton1) buscarLibro(window);
                 }
             });
             boton2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton2) prestarLibro(window,usuario);
+                    if (e.getSource() == boton2) prestarLibro(window);
                 }
             });
             boton3.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton3) agregarLibro(window,usuario);
+                    if (e.getSource() == boton3) agregarLibro(window);
                 }
             });
             boton4.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton4) devolverLibro(window,usuario);
+                    if (e.getSource() == boton4) devolverLibro(window);
                 }
             });
             boton5.addActionListener(new ActionListener() {
@@ -131,14 +131,13 @@ public class SistemaImpl implements Sistema{
                 public void actionPerformed(ActionEvent e) {
                     if (e.getSource() == boton5) {
                         try {
-                            cerrarPrograma(window,usuario, (ArrayList) movimientos);
+                            cerrarPrograma(window, (ArrayList) movimientos);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     }
                 }
             });
-        }
     }
 
     /**
@@ -190,7 +189,7 @@ public class SistemaImpl implements Sistema{
      * @param ventana a utilizar.
      */
     @Override
-    public void buscarLibro(Ventana ventana,Usuario usuario) {
+    public void buscarLibro(Ventana ventana) {
         JTextField texto;
         JButton boton;
         JPanel panel;
@@ -222,7 +221,7 @@ public class SistemaImpl implements Sistema{
      * @param ventana a utilizar.
      */
     @Override
-    public void prestarLibro(Ventana ventana,Usuario usuario) {
+    public void prestarLibro(Ventana ventana) {
         JTextField texto;
         JButton boton;
         JPanel panel;
@@ -253,7 +252,7 @@ public class SistemaImpl implements Sistema{
      * @param ventana a utilizar.
      */
     @Override
-    public void agregarLibro(Ventana ventana,Usuario usuario) {
+    public void agregarLibro(Ventana ventana) {
         JTextField t1,t2,t3,t4,t5,t6;
         JButton boton;
         JPanel panel;
@@ -306,7 +305,7 @@ public class SistemaImpl implements Sistema{
      * @param ventana a usar.
      */
     @Override
-    public void devolverLibro(Ventana ventana,Usuario usuario) {
+    public void devolverLibro(Ventana ventana) {
         JTextField texto;
         JButton boton;
         JPanel panel;
@@ -338,9 +337,8 @@ public class SistemaImpl implements Sistema{
      * Método para cerrar la sesión.
      */
     @Override
-    public Usuario cerrarPrograma(Ventana ventana, Usuario usuario, ArrayList lista) throws IOException {
+    public void cerrarPrograma(Ventana ventana, ArrayList lista) throws IOException {
         GuardadoArchivo.guardar(lista);
-        usuario=null;
-        return usuario;
+        System.exit(0);
     }
 }
