@@ -22,7 +22,7 @@ public interface Sistema {
     /**
      * Método para prestar un libro.
      */
-    void prestarLibro(Ventana ventana);
+    void prestarLibro(Ventana ventana, Usuario usuario);
 
     /**
      * Método para agregar un libro.
@@ -32,7 +32,7 @@ public interface Sistema {
     /**
      * Método para devolver un libro
      */
-    void devolverLibro(Ventana ventana);
+    void devolverLibro(Ventana ventana, Usuario usuario);
     /**
      * Método para cerrar el programa.
      */

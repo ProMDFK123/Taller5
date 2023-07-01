@@ -61,7 +61,7 @@ public class SistemaImpl implements Sistema{
      * Menú principal con las opciones del programa.
      * @param ventana a usar.
      */
-    public void mainMenu(Ventana ventana){
+    public void mainMenu(Ventana ventana, Usuario usuario){
             //Definición de botones y panel.
             JButton boton1, boton2, boton3, boton4, boton5;
             JPanel panel;
@@ -111,7 +111,7 @@ public class SistemaImpl implements Sistema{
             boton2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton2) prestarLibro(window);
+                    if (e.getSource() == boton2) prestarLibro(window, usuario);
                 }
             });
             boton3.addActionListener(new ActionListener() {
@@ -123,7 +123,7 @@ public class SistemaImpl implements Sistema{
             boton4.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton4) devolverLibro(window);
+                    if (e.getSource() == boton4) devolverLibro(window, usuario);
                 }
             });
             boton5.addActionListener(new ActionListener() {
@@ -197,7 +197,7 @@ public class SistemaImpl implements Sistema{
                     if(!auxUsser.getContrasenia().equals(clave)){
                         MensajeEmergente(panel,error);
                     }else{
-                        mainMenu(window);
+                        mainMenu(window,auxUsser);
                     }
                 }
             }
@@ -273,10 +273,15 @@ public class SistemaImpl implements Sistema{
      * @param ventana a utilizar.
      */
     @Override
-    public void prestarLibro(Ventana ventana) {
+    public void prestarLibro(Ventana ventana, Usuario usuario) {
         JTextField texto;
         JButton boton;
+        JButton boton1;
         JPanel panel;
+        String success = "El préstamo se realizó correctamente.";
+        String error = "ISBN Inválido.";
+        String notFound = "Libro no existe.";
+        String outOfStock = "No hay copias disponibles para este libro.";
 
         ventana.setBounds(50,20,280,180);
         ventana.setVisible(true);
@@ -290,13 +295,58 @@ public class SistemaImpl implements Sistema{
 
         texto=new JTextField();
         boton=new JButton();
+        boton1=new JButton();
 
         texto.setBounds(50,10,160,25);
         boton.setBounds(50,40,160,25);
+        boton1.setBounds(50,70,160,25);
         panel.add(texto);
         panel.add(boton);
+        panel.add(boton1);
         texto.setText("ISBN");
-        boton.setText("Realizar Prestamo");
+        boton.setText("Realizar Préstamo");
+        boton1.setText("Volver");
+
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String auxISBN = texto.getText();
+
+                if(auxISBN==null){
+                    MensajeEmergente(panel,error);
+                }else {
+                    Libro libro = (Libro) libros.getElemento(auxISBN);
+
+                    if(libro==null){
+                        MensajeEmergente(panel,notFound);
+                    }else {
+                        if(libro.getStock()==0){
+                            MensajeEmergente(panel,outOfStock);
+                        }else {
+                            libro.setStock(libro.getStock()-1);
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(usuario.getRut()+",");
+                            sb.append(usuario.getNombre()+",");
+                            sb.append(usuario.getApellido()+",");
+                            sb.append(libro.getIsbn()+",");
+                            sb.append(libro.getTitulo()+",");
+                            sb.append("prestamo");
+
+                            String prestamo = sb.toString();
+                            movimientos.add(prestamo);
+                            MensajeEmergente(panel,success);
+                        }
+                    }
+                }
+            }
+        });
+
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainMenu(ventana, usuario);
+            }
+        });
     }
 
     /**
@@ -357,7 +407,7 @@ public class SistemaImpl implements Sistema{
      * @param ventana a usar.
      */
     @Override
-    public void devolverLibro(Ventana ventana) {
+    public void devolverLibro(Ventana ventana, Usuario usuario) {
         JTextField texto;
         JButton boton;
         JPanel panel;
