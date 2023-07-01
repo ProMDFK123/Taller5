@@ -11,7 +11,7 @@ public class GuardadoArchivo {
     }
 
     public static void guardar(ArrayList lista) throws IOException {
-        FileWriter writer = new FileWriter("E://reservas.txt");
+        FileWriter writer = new FileWriter("reservas.txt");
 
         for(int i=0; i<lista.size(); i++){
             try {

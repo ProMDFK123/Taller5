@@ -46,8 +46,7 @@ public class SistemaImpl implements Sistema{
         LecturaArchivos.leerArchivoLibros(libros);
         LecturaArchivos.leerArchivoUsuarios(usuarios);
 
-        mainMenu(window);
-        //iniciarSesion(window);
+        iniciarSesion(window);
     }
 
     /**
@@ -182,6 +181,26 @@ public class SistemaImpl implements Sistema{
         boton.setBounds(50,110,160,25);
         panel.add(boton);
         boton.setText("Iniciar Sesión");
+
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String rut = texto1.getText();
+                String clave = texto2.getText();
+
+                Usuario auxUsser = (Usuario) usuarios.buscar(rut);
+
+                if(auxUsser==null){
+                    MensajeEmergente(panel,error);
+                } else{
+                    if(!auxUsser.getContrasenia().equals(clave)){
+                        MensajeEmergente(panel,error);
+                    }else{
+                        mainMenu(window);
+                    }
+                }
+            }
+        });
     }
 
     /**

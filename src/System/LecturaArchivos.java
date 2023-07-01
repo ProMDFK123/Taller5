@@ -31,9 +31,7 @@ public class LecturaArchivos {
                 int copies = Integer.parseInt(chain[4]);
                 int price = Integer.parseInt(chain[5]);
 
-                Integer intISBN = Integer.parseInt(isbn);
-
-                Libro libro = new Libro(intISBN,title,author,category,copies,price);
+                Libro libro = new Libro(isbn,title,author,category,copies,price);
                 lista.agregar(libro);
             }
         } catch (Exception e) {

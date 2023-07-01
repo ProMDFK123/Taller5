@@ -8,7 +8,7 @@ import System.Utils;
  */
 public class Libro implements Elemento {
     //El código ISBN del libro.
-    private int isbn;
+    private String isbn;
     //El título del libro.
     private String titulo;
     //El autor del libro.
@@ -19,9 +19,9 @@ public class Libro implements Elemento {
     private int stock;
     private int precio;
 
-    public Libro(int isbn, String titulo, String autor, String categoria, int stock, int precio) {
+    public Libro(String isbn, String titulo, String autor, String categoria, int stock, int precio) {
         //Validación del ISBN.
-        if(!Utils.validarInt(isbn)) throw new IllegalArgumentException("[!] ISBN Invalido [!]");
+        if(!Utils.validarString(isbn)) throw new IllegalArgumentException("[!] ISBN Invalido [!]");
         this.isbn = isbn;
 
         //Validación del título.
@@ -37,16 +37,16 @@ public class Libro implements Elemento {
         this.categoria = categoria;
 
         //Validación del stock.
-        if(!Utils.validarInt(stock)) throw new IllegalArgumentException("[!] Stock Invalido [!]");
+        if(stock<0) throw new IllegalArgumentException("[!] Stock Invalido [!]");
         this.stock = stock;
 
-        if(!Utils.validarInt(precio)) throw new IllegalArgumentException("[!] Precio Invalido [!]");
+        if(precio<0) throw new IllegalArgumentException("[!] Precio Invalido [!]");
         this.precio=precio;
     }
 
     //Los Getter.
 
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
@@ -72,7 +72,7 @@ public class Libro implements Elemento {
 
     //Los Setter.
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

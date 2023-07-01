@@ -72,7 +72,7 @@ public class Utils {
      * @param i int a validar.
      * @return true si es mayor a 0, false en caso contrario.
      */
-    public static boolean validarInt(int i){return i<0;}
+    public static boolean validarInt(int i){return 0>i;}
 
     /**
      * Método que valida un elemento.
