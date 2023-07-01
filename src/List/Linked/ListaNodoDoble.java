@@ -1,6 +1,7 @@
 package List.Linked;
 
 import List.Elemento;
+import Objects.Libro;
 import System.Utils;
 
 /**
@@ -342,4 +343,30 @@ public class ListaNodoDoble implements Lista{
      */
     public boolean isCabeza(Elemento elemento){return this.cabeza.getElemento().esIgual(elemento);}
     public boolean isCola(Elemento elemento){return this.cola.getElemento().esIgual(elemento);}
+
+    /**
+     * Método para buscar un elemento dado su ISBN.
+     * @param isbn del libro.
+     * @return el libro.
+     */
+    public Elemento getElemento(String isbn){
+        //Si la lista esta vacía.
+        if(isVacia()) return null;
+
+        //Revisar la cabeza.
+        if(this.cabeza.getElemento() instanceof Libro libro){if(libro.getIsbn().equals(isbn)) return libro;}
+
+        //Revisar la cola.
+        if(this.cola.getElemento() instanceof  Libro libro){if(libro.getIsbn().equals(isbn)) return libro;}
+
+        //Revisar el resto de la lista.
+        for(NodoDoble aux=this.cabeza; aux!=null; aux=aux.getSiguiente()){
+            Libro auxBook = (Libro) aux.getElemento();
+
+            if(auxBook.getIsbn().equals(isbn)) return auxBook;
+        }
+
+        //No se encontró el libro.
+        return null;
+    }
 }

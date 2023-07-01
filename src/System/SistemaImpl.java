@@ -2,6 +2,7 @@ package System;
 
 import List.Array.ListaElemento;
 import List.Linked.ListaNodoDoble;
+import Objects.Libro;
 import Objects.Usuario;
 
 import javax.swing.*;
@@ -212,6 +213,8 @@ public class SistemaImpl implements Sistema{
         JTextField texto;
         JButton boton;
         JPanel panel;
+        String notFound = "No se ha encontrado el libro.";
+        String error = "ISBN inválida.";
 
         ventana.setBounds(50,20,280,180);
         ventana.setVisible(true);
@@ -233,6 +236,36 @@ public class SistemaImpl implements Sistema{
         boton.setBounds(50,40,160,25);
         panel.add(boton);
         boton.setText("Buscar");
+
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String auxISBN = texto.getText();
+
+                if(auxISBN==null){
+                    MensajeEmergente(panel,error);
+                }else {
+                    Libro libro = (Libro) libros.getElemento(auxISBN);
+
+                    if(libro==null){
+                        MensajeEmergente(panel,notFound);
+                    }else {
+                        String titulo = libro.getTitulo();
+                        String autor = libro.getAutor();
+                        String categoria = libro.getCategoria();
+                        String copias = String.valueOf(libro.getStock());
+
+                        StringBuilder bookInfo = new StringBuilder();
+                        bookInfo.append("Título: "+titulo+"\n");
+                        bookInfo.append("Autor: "+autor+"\n");
+                        bookInfo.append("Categoría: "+categoria+"\n");
+                        bookInfo.append("Unidades disponibles: "+copias+"\n");
+
+                        MensajeEmergente(panel,bookInfo.toString());
+                    }
+                }
+            }
+        });
     }
 
     /**
