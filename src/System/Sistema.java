@@ -1,5 +1,6 @@
 package System;
 
+import List.Linked.ListaNodoDoble;
 import Objects.Usuario;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public interface Sistema {
     /**
      * Método para buscar un libro.
      */
-    void buscarLibro(Ventana ventana);
+    void buscarLibro(Ventana ventana, Usuario usuario);
 
     /**
      * Método para prestar un libro.
@@ -27,7 +28,7 @@ public interface Sistema {
     /**
      * Método para agregar un libro.
      */
-    void agregarLibro(Ventana ventana);
+    void agregarLibro(Ventana ventana, Usuario usuario);
 
     /**
      * Método para devolver un libro
@@ -36,5 +37,5 @@ public interface Sistema {
     /**
      * Método para cerrar el programa.
      */
-    void cerrarPrograma(Ventana ventana, ArrayList lista) throws IOException;
+    void cerrarPrograma(Ventana ventana, ArrayList lista, ListaNodoDoble lista2) throws IOException;
 }

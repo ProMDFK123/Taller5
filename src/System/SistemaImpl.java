@@ -2,8 +2,10 @@ package System;
 
 import List.Array.ListaElemento;
 import List.Linked.ListaNodoDoble;
+import List.Linked.NodoDoble;
 import Objects.Libro;
 import Objects.Usuario;
+import List.Elemento;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -105,7 +107,7 @@ public class SistemaImpl implements Sistema{
             boton1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton1) buscarLibro(window);
+                    if (e.getSource() == boton1) buscarLibro(window,usuario);
                 }
             });
             boton2.addActionListener(new ActionListener() {
@@ -117,7 +119,7 @@ public class SistemaImpl implements Sistema{
             boton3.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (e.getSource() == boton3) agregarLibro(window);
+                    if (e.getSource() == boton3) agregarLibro(window,usuario);
                 }
             });
             boton4.addActionListener(new ActionListener() {
@@ -131,7 +133,7 @@ public class SistemaImpl implements Sistema{
                 public void actionPerformed(ActionEvent e) {
                     if (e.getSource() == boton5) {
                         try {
-                            cerrarPrograma(window, (ArrayList) movimientos);
+                            cerrarPrograma(window, (ArrayList) movimientos, libros);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
@@ -209,9 +211,10 @@ public class SistemaImpl implements Sistema{
      * @param ventana a utilizar.
      */
     @Override
-    public void buscarLibro(Ventana ventana) {
+    public void buscarLibro(Ventana ventana, Usuario usuario) {
         JTextField texto;
         JButton boton;
+        JButton boton2;
         JPanel panel;
         String notFound = "No se ha encontrado el libro.";
         String error = "ISBN inválida.";
@@ -228,14 +231,18 @@ public class SistemaImpl implements Sistema{
 
         texto=new JTextField();
         boton=new JButton();
+        boton2=new JButton();
 
         texto.setBounds(50,10,160,25);
         panel.add(texto);
         texto.setText("ISBN");
 
         boton.setBounds(50,40,160,25);
+        boton2.setBounds(50,70,160,25);
         panel.add(boton);
+        panel.add(boton2);
         boton.setText("Buscar");
+        boton2.setText("Volver");
 
         boton.addActionListener(new ActionListener() {
             @Override
@@ -264,6 +271,13 @@ public class SistemaImpl implements Sistema{
                         MensajeEmergente(panel,bookInfo.toString());
                     }
                 }
+            }
+        });
+
+        boton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainMenu(ventana,usuario);
             }
         });
     }
@@ -354,12 +368,16 @@ public class SistemaImpl implements Sistema{
      * @param ventana a utilizar.
      */
     @Override
-    public void agregarLibro(Ventana ventana) {
+    public void agregarLibro(Ventana ventana, Usuario usuario) {
         JTextField t1,t2,t3,t4,t5,t6;
         JButton boton;
+        JButton boton2;
         JPanel panel;
+        String error = "Alguno de los campos es invalido";
+        String success = "Se añadió el libro correctamente.";
+        String exist = "El libro a agregar ya existe.";
 
-        ventana.setBounds(50,20,280,280);
+        ventana.setBounds(50,20,280,310);
         ventana.setVisible(true);
         ventana.setResizable(false);
 
@@ -377,6 +395,7 @@ public class SistemaImpl implements Sistema{
         t6=new JTextField();
 
         boton=new JButton();
+        boton2=new JButton();
 
         t1.setBounds(50,10,160,25);
         t2.setBounds(50,40,160,25);
@@ -400,6 +419,43 @@ public class SistemaImpl implements Sistema{
         boton.setBounds(50,190,160,25);
         panel.add(boton);
         boton.setText("Añadir");
+        boton2.setBounds(50,210,160,25);
+        panel.add(boton2);
+        boton2.setText("Volver");
+
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String isbn = t1.getText();
+                String titulo = t2.getText();
+                String autor = t3.getText();
+                String categoria = t4.getText();
+                int stock = Integer.parseInt(t5.getText());
+                int precio = Integer.parseInt(t6.getText());
+
+                if(isbn==null || titulo==null || autor==null || categoria==null){
+                    MensajeEmergente(panel,error);
+                } else if (isbn.equals("ISBN") || titulo.equals("Título") || autor.equals("Autor") || categoria.equals("Categoría") || stock<=0 || precio<=0) {
+                    MensajeEmergente(panel,error);
+                } else {
+                    Libro newLibro = new Libro(isbn,titulo,autor,categoria,stock,precio);
+
+                    if(libros.contiene(newLibro)){
+                        MensajeEmergente(panel,exist);
+                    }else {
+                        libros.agregar(newLibro);
+                        MensajeEmergente(panel,success);
+                    }
+                }
+            }
+        });
+
+        boton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainMenu(ventana,usuario);
+            }
+        });
     }
 
     /**
@@ -410,6 +466,7 @@ public class SistemaImpl implements Sistema{
     public void devolverLibro(Ventana ventana, Usuario usuario) {
         JTextField texto;
         JButton boton;
+        JButton boton1;
         JPanel panel;
 
         ventana.setBounds(50,20,280,180);
@@ -425,22 +482,74 @@ public class SistemaImpl implements Sistema{
         texto=new JTextField();
 
         boton=new JButton();
+        boton1=new JButton();
 
         texto.setBounds(50,10,160,25);
         panel.add(texto);
         texto.setText("ISBN");
 
         boton.setBounds(50,40,160,25);
+        boton1.setBounds(50,70,160,25);
         panel.add(boton);
+        panel.add(boton1);
         boton.setText("Devolver");
+        boton1.setText("Volver");
+
+        boton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str = texto.getText();
+
+                if(str==null || str.equals("ISBN")){
+                    MensajeEmergente(panel,"ISBN ingresado es invalido.");
+                }else {
+                    Libro aux = (Libro) libros.getElemento(str);
+
+                    if(aux==null){
+                        MensajeEmergente(panel,"Libro no existe.");
+                    }else {
+
+                    }
+                }
+            }
+        });
+
+        boton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainMenu(ventana,usuario);
+            }
+        });
     }
 
     /**
-     * Método para cerrar la sesión.
+     * Método para cerrar el programa.
+     * @param ventana a usar.
+     * @param lista1 - una lista a actualizar.
+     * @param lista2 - otra lista a actualizar.
+     * @throws IOException en caso de error.
      */
     @Override
-    public void cerrarPrograma(Ventana ventana, ArrayList lista) throws IOException {
-        GuardadoArchivo.guardar(lista);
+    public void cerrarPrograma(Ventana ventana, ArrayList lista1, ListaNodoDoble lista2) throws IOException {
+        ArrayList<Elemento> librosArray = classToArray(lista2);
+
+        GuardadoArchivo.guardar(lista1,"reservas.txt");
+        GuardadoArchivo.guardar(librosArray,"libros.txt");
         System.exit(0);
+    }
+
+    /**
+     * Método auxiliar para pasar una ListaNodoDoble a ArrayList
+     * @param lista a convertir a ArrayList
+     * @return la lista en ArrayList
+     */
+    public ArrayList classToArray(ListaNodoDoble lista){
+        ArrayList<Elemento> list = new ArrayList<>();
+
+        for(NodoDoble aux=lista.getCabeza(); aux!=null; aux=aux.getSiguiente()){
+            list.add(aux.getElemento());
+        }
+
+        return list;
     }
 }

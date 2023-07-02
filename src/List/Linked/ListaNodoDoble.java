@@ -32,6 +32,14 @@ public class ListaNodoDoble implements Lista{
         return tamanio;
     }
 
+    public NodoDoble getCabeza() {
+        return cabeza;
+    }
+
+    public NodoDoble getCola() {
+        return cola;
+    }
+
     /**
      * Agrega un elemento.
      * @param elemento a agregar.
