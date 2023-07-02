@@ -1,0 +1,35 @@
+@startuml
+
+
+entity Sistema{}
+
+entity Libro{
+    -ISBN
+    -título
+    -autor
+    -categoría
+    -stock
+    -precio
+}
+Sistema"1"--"*"Libro: posee >
+
+entity Usuario{
+    -nombre
+    -apellido
+    -RUT
+    -contraseña
+}
+Sistema"1"--"*"Usuario: tiene >
+
+entity Transacción{
+    -RUT del vendedor
+    -nombre del vendedor
+    -apellido del vendedor
+    -ISBN del libro
+    -título del libro
+    -tipo de transacción
+}
+Usuario"1"--"*"Transacción: realiza >
+Libro"1"--"1"Transacción: prestado/devuelto >
+Sistema"1"--"*"Transacción: contiene >
+@enduml
