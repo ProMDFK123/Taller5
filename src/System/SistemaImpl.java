@@ -4,6 +4,7 @@ import List.Array.ListaElemento;
 import List.Linked.ListaNodoDoble;
 import List.Linked.NodoDoble;
 import Objects.Libro;
+import Objects.Transferencia;
 import Objects.Usuario;
 import List.Elemento;
 
@@ -26,7 +27,7 @@ public class SistemaImpl implements Sistema{
     //Una ventana para los JPanel.
     private Ventana window;
 
-    private List<String> movimientos;
+    private List<Transferencia> movimientos;
 
     /**
      * Constructor.
@@ -338,15 +339,7 @@ public class SistemaImpl implements Sistema{
                             MensajeEmergente(panel,outOfStock);
                         }else {
                             libro.setStock(libro.getStock()-1);
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(usuario.getRut()+",");
-                            sb.append(usuario.getNombre()+",");
-                            sb.append(usuario.getApellido()+",");
-                            sb.append(libro.getIsbn()+",");
-                            sb.append(libro.getTitulo()+",");
-                            sb.append("prestamo");
-
-                            String prestamo = sb.toString();
+                            Transferencia prestamo = new Transferencia(usuario.getRut(), usuario.getNombre(),usuario.getApellido(), libro.getIsbn(), libro.getTitulo(),"prestamo");
                             movimientos.add(prestamo);
                             MensajeEmergente(panel,success);
                         }
@@ -508,7 +501,10 @@ public class SistemaImpl implements Sistema{
                     if(aux==null){
                         MensajeEmergente(panel,"Libro no existe.");
                     }else {
-
+                        aux.setStock(aux.getStock()+1);
+                        Transferencia devolucion = new Transferencia(usuario.getRut(), usuario.getNombre(), usuario.getApellido(), aux.getIsbn(), aux.getTitulo(),"devolucion");
+                        movimientos.add(devolucion);
+                        MensajeEmergente(panel,"La devolución fue exitosa");
                     }
                 }
             }
@@ -531,7 +527,7 @@ public class SistemaImpl implements Sistema{
      */
     @Override
     public void cerrarPrograma(Ventana ventana, ArrayList lista1, ListaNodoDoble lista2) throws IOException {
-        ArrayList<Elemento> librosArray = classToArray(lista2);
+        ArrayList<Elemento> librosArray = toArray(lista2);
 
         GuardadoArchivo.guardar(lista1,"reservas.txt");
         GuardadoArchivo.guardar(librosArray,"libros.txt");
@@ -543,7 +539,7 @@ public class SistemaImpl implements Sistema{
      * @param lista a convertir a ArrayList
      * @return la lista en ArrayList
      */
-    public ArrayList classToArray(ListaNodoDoble lista){
+    public ArrayList toArray(ListaNodoDoble lista){
         ArrayList<Elemento> list = new ArrayList<>();
 
         for(NodoDoble aux=lista.getCabeza(); aux!=null; aux=aux.getSiguiente()){
